@@ -72,9 +72,7 @@
     @apply border-border;
   }
 
-  html {
-    @apply dark;
-  }
+  /* Dark mode is controlled via design tokens and gradient background */
 
   body {
     @apply bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 text-foreground-dark min-h-screen;
