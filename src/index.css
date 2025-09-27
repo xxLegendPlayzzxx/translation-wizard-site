@@ -1,69 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap');
 
-/* PageTurner Design System - Glassy gradients and premium dark mode */
+/* Sakura Ink Design System - Washi paper feel with ink text */
 
 @layer base {
   :root {
-    /* Base colours */
-    --background: 220 13% 91%;
-    --foreground: 220 84% 4.9%;
+    /* Sakura Ink - Light Mode */
+    --bg: #F7F5F2;
+    --surface: #FFFFFF;
+    --ink: #0F172A;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --brand: #E85C88;
+    --brand-600: #D34473;
+    --brand-700: #B0355D;
+    --indigo: #4F46E5;
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --info: #0EA5E9;
 
-    /* Dark mode primary palette */
-    --background-dark: 222 84% 4.9%;
-    --foreground-dark: 210 40% 98%;
-
-    /* Glass morphism colours */
-    --glass-bg: 0 0% 100% / 0.05;
-    --glass-border: 0 0% 100% / 0.1;
-    --glass-shadow: 0 0% 0% / 0.3;
-
-    /* Gradient colours */
-    --gradient-primary: 222 84% 4.9%;
-    --gradient-secondary: 263 70% 50%;
-    --gradient-accent: 250 84% 54%;
-
-    /* Component colours */
-    --card: 0 0% 100% / 0.05;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 263 70% 50%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 250 84% 54%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 0 0% 100% / 0.1;
-    --input: 0 0% 0% / 0.2;
-    --ring: 263 70% 50%;
-
+    /* Legacy shadcn variables mapped to Sakura Ink */
+    --background: var(--bg);
+    --foreground: var(--ink);
+    --card: var(--surface);
+    --card-foreground: var(--ink);
+    --popover: var(--surface);
+    --popover-foreground: var(--ink);
+    --primary: var(--brand);
+    --primary-foreground: #FFFFFF;
+    --secondary: color-mix(in oklab, var(--ink) 4%, transparent);
+    --secondary-foreground: var(--ink);
+    --accent: var(--indigo);
+    --accent-foreground: #FFFFFF;
+    --destructive: var(--danger);
+    --destructive-foreground: #FFFFFF;
+    --muted-foreground: var(--muted);
+    --input: var(--surface);
+    --ring: var(--indigo);
     --radius: 0.75rem;
 
-    /* Custom gradients */
-    --gradient-glass: linear-gradient(135deg, hsl(var(--gradient-primary)) 0%, hsl(var(--gradient-secondary)) 50%, hsl(var(--gradient-accent)) 100%);
-    --gradient-button: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100% / 0.03) 0%, transparent 100%);
+    /* Selection highlight for reader */
+    --selection-bg: rgba(232, 92, 136, 0.15);
 
-    /* Animation variables */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Typography */
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-reading: 'Noto Serif JP', serif;
 
-    /* Shadows */
-    --shadow-glass: 0 8px 32px hsl(var(--glass-shadow)), 0 0 0 1px hsl(var(--glass-border));
-    --shadow-elegant: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 10px 10px -5px hsl(0 0% 0% / 0.04);
+    /* Motion */
+    --transition-smooth: all 150ms ease;
+  }
+
+  [data-theme="dark"] {
+    /* Sakura Ink - Dark Mode */
+    --bg: #0F1117;
+    --surface: #111827;
+    --ink: #E5E7EB;
+    --muted: #A1A1AA;
+    --border: #2A2F3B;
+    /* Brand colors stay the same */
   }
 }
 
@@ -72,29 +69,43 @@
     @apply border-border;
   }
 
-  /* Dark mode is controlled via design tokens and gradient background */
+  html {
+    font-family: var(--font-ui);
+  }
 
   body {
-    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 text-foreground-dark min-h-screen;
-    background-attachment: fixed;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 2rem;
+    min-height: 100vh;
+    transition: var(--transition-smooth);
   }
 
-  /* Glass morphism utilities */
-  .glass {
-    background: hsl(var(--glass-bg));
-    backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--glass-border));
-    box-shadow: var(--shadow-glass);
+  @media (min-width: 768px) {
+    body {
+      font-size: 18px;
+    }
   }
 
-  .glass-subtle {
-    background: hsl(0 0% 100% / 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid hsl(0 0% 100% / 0.08);
+  /* Typography */
+  .font-reading {
+    font-family: var(--font-reading);
   }
 
-  /* Smooth transitions for all interactive elements */
-  button, input, select, a {
+  /* Selection */
+  ::selection {
+    background: var(--selection-bg);
+  }
+
+  /* Focus visible for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--indigo);
+    outline-offset: 2px;
+  }
+
+  /* Smooth transitions for interactive elements */
+  button, input, select, textarea, a {
     transition: var(--transition-smooth);
   }
 
@@ -104,15 +115,20 @@
   }
   
   ::-webkit-scrollbar-track {
-    background: hsl(0 0% 0% / 0.1);
+    background: var(--border);
   }
   
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary));
+    background: var(--brand);
     border-radius: 4px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--accent));
+    background: var(--brand-600);
+  }
+
+  /* Content max-width for reading */
+  .reading-width {
+    max-width: 70ch;
   }
 }

@@ -1,6 +1,9 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ThemeToggle";
+import { BookOpen } from "lucide-react";
 
 // Beautiful, production-ready upload → options → progress UI.
 // Connected to PageTurner API endpoints.
@@ -162,18 +165,31 @@ export default function TranslationWizard() {
   }, [estChars]);
 
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto max-w-4xl px-4 py-10">
+    <div className="min-h-screen bg-bg">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-sm bg-surface/80 border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center gap-2">
+              <BookOpen className="h-8 w-8 text-brand" />
+              <span className="text-xl font-bold text-ink">PageTurner</span>
+            </div>
+            <ThemeToggle />
+          </div>
+        </div>
+      </nav>
+      
+      <div className="mx-auto max-w-4xl px-4 py-10 pt-24">
         <motion.header 
           initial={{ opacity: 0, y: -8 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.5 }} 
           className="mb-8 text-center"
         >
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground-dark">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-ink font-ui">
             PageTurner — UGC Light‑Novel Translator
           </h1>
-          <p className="mt-2 text-slate-300">
+          <p className="mt-2 text-muted">
             Upload your novel → set style & glossary → get a polished EPUB/PDF.
           </p>
         </motion.header>
@@ -182,24 +198,24 @@ export default function TranslationWizard() {
           initial={{ opacity: 0, y: 12 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.4 }}
-          className="glass rounded-2xl p-6 md:p-8"
+          className="bg-surface border border-border rounded-2xl shadow-sm p-6 md:p-8"
         >
 
           {/* Upload row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Source file (.epub, .docx, .txt, .pdf)
               </label>
-              <div className="glass-subtle rounded-xl p-4">
+              <div className="bg-[color-mix(in_oklab,var(--ink)_1%,transparent)] border border-border rounded-xl p-4">
                 <input
                   onChange={(e) => setFile(e.target.files?.[0] || null)}
                   type="file"
                   accept=".epub,.docx,.txt,.pdf"
-                  className="file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-4 file:py-2 file:text-primary-foreground file:hover:bg-accent w-full text-sm"
+                  className="file:mr-4 file:rounded-full file:border-0 file:bg-brand file:px-4 file:py-2 file:text-white file:hover:bg-brand-600 w-full text-sm text-ink"
                 />
                 {file && (
-                  <p className="mt-2 text-xs text-slate-300">
+                  <p className="mt-2 text-xs text-muted">
                     {file.name} · {readableSize(file.size)}
                   </p>
                 )}
@@ -207,18 +223,18 @@ export default function TranslationWizard() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Optional glossary (.csv)
               </label>
-              <div className="glass-subtle rounded-xl p-4">
+              <div className="bg-[color-mix(in_oklab,var(--ink)_1%,transparent)] border border-border rounded-xl p-4">
                 <input
                   onChange={(e) => setGlossary(e.target.files?.[0] || null)}
                   type="file"
                   accept=".csv"
-                  className="file:mr-4 file:rounded-md file:border-0 file:bg-secondary file:px-4 file:py-2 file:text-secondary-foreground file:hover:bg-muted w-full text-sm"
+                  className="file:mr-4 file:rounded-xl file:border-0 file:bg-[color-mix(in_oklab,var(--ink)_4%,transparent)] file:px-4 file:py-2 file:text-ink file:hover:bg-[color-mix(in_oklab,var(--ink)_8%,transparent)] w-full text-sm text-ink"
                 />
                 {glossary && (
-                  <p className="mt-2 text-xs text-slate-300">
+                  <p className="mt-2 text-xs text-muted">
                     {glossary.name} · {readableSize(glossary.size)}
                   </p>
                 )}
@@ -229,11 +245,11 @@ export default function TranslationWizard() {
           {/* Options */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">Source language</label>
+              <label className="block text-sm font-medium text-ink mb-2">Source language</label>
               <select 
                 value={sourceLang} 
                 onChange={(e) => setSourceLang(e.target.value)}
-                className="w-full rounded-lg bg-input border border-border px-3 py-2 text-sm text-foreground-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full rounded-xl bg-surface border border-border px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-indigo focus:border-indigo"
               >
                 <option value="auto">Auto‑detect</option>
                 <option value="ja">Japanese</option>
@@ -242,31 +258,29 @@ export default function TranslationWizard() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">Target language</label>
+              <label className="block text-sm font-medium text-ink mb-2">Target language</label>
               <select 
                 value={targetLang} 
                 onChange={(e) => setTargetLang(e.target.value)}
-                className="w-full rounded-lg bg-input border border-border px-3 py-2 text-sm text-foreground-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full rounded-xl bg-surface border border-border px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-indigo focus:border-indigo"
               >
                 <option value="en">English (UK)</option>
                 <option value="en-US">English (US)</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">Style preset</label>
+              <label className="block text-sm font-medium text-ink mb-2">Style preset</label>
               <div className="grid grid-cols-3 gap-2">
                 {(["literal", "natural", "academic"] as const).map(k => (
-                  <button 
+                  <Button
                     key={k}
+                    variant={stylePreset === k ? "default" : "secondary"}
+                    size="sm"
                     onClick={() => setStylePreset(k)}
-                    className={`rounded-lg px-3 py-2 text-sm border transition-all ${
-                      stylePreset === k 
-                        ? "bg-primary border-primary text-primary-foreground" 
-                        : "glass-subtle border-border hover:bg-secondary/20"
-                    }`}
+                    className="text-sm"
                   >
                     {k.charAt(0).toUpperCase() + k.slice(1)}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -274,30 +288,30 @@ export default function TranslationWizard() {
 
           {/* Toggles */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <label className="flex items-center gap-3 text-sm text-foreground-dark">
+            <label className="flex items-center gap-3 text-sm text-ink cursor-pointer">
               <input 
                 type="checkbox" 
                 checked={keepHonorifics} 
                 onChange={(e) => setKeepHonorifics(e.target.checked)} 
-                className="h-4 w-4 rounded border-border bg-input accent-primary" 
+                className="h-4 w-4 rounded border-border bg-surface accent-brand focus:ring-2 focus:ring-indigo focus:ring-offset-2" 
               />
               Keep honorifics (‑san, ‑kun, etc.)
             </label>
-            <label className="flex items-center gap-3 text-sm text-foreground-dark">
+            <label className="flex items-center gap-3 text-sm text-ink cursor-pointer">
               <input 
                 type="checkbox" 
                 checked={britishPunctuation} 
                 onChange={(e) => setBritishPunctuation(e.target.checked)} 
-                className="h-4 w-4 rounded border-border bg-input accent-primary" 
+                className="h-4 w-4 rounded border-border bg-surface accent-brand focus:ring-2 focus:ring-indigo focus:ring-offset-2" 
               />
               British punctuation & spelling
             </label>
-            <label className="flex items-center gap-3 text-sm text-foreground-dark">
+            <label className="flex items-center gap-3 text-sm text-ink cursor-pointer">
               <input 
                 type="checkbox" 
                 checked={agreeRights} 
                 onChange={(e) => setAgreeRights(e.target.checked)} 
-                className="h-4 w-4 rounded border-border bg-input accent-primary" 
+                className="h-4 w-4 rounded border-border bg-surface accent-brand focus:ring-2 focus:ring-indigo focus:ring-offset-2" 
               />
               I own the rights / have permission
             </label>
@@ -306,15 +320,17 @@ export default function TranslationWizard() {
           {/* Estimate & Actions */}
           <div className="mt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
-              <button 
+              <Button 
                 onClick={handleEstimate} 
                 disabled={!file}
-                className="rounded-xl bg-secondary hover:bg-secondary/80 px-4 py-2 text-sm text-secondary-foreground disabled:opacity-50 transition-all"
+                variant="secondary"
+                size="sm"
+                className="text-sm"
               >
                 Estimate characters & cost
-              </button>
+              </Button>
               {estChars && (
-                <div className="mt-2 text-xs text-slate-300">
+                <div className="mt-2 text-xs text-muted">
                   ≈ {estChars.toLocaleString()} characters
                   {estCost && (
                     <>
@@ -328,56 +344,63 @@ export default function TranslationWizard() {
               )}
             </div>
 
-            <button 
+            <Button 
               onClick={handleStart} 
               disabled={!canStart}
-              className="rounded-xl bg-gradient-button hover:opacity-90 px-5 py-2.5 font-medium text-sm text-primary-foreground shadow-lg disabled:opacity-50 transition-all animate-glow"
+              variant="sakura"
+              className="px-5 py-2.5 font-medium text-sm shadow-lg disabled:opacity-50"
             >
               Start translation
-            </button>
+            </Button>
           </div>
 
           {/* Progress */}
           {project && project.status !== "idle" && (
             <div className="mt-8">
-              <div className="flex items-center justify-between text-xs text-slate-300 mb-1">
+              <div className="flex items-center justify-between text-xs text-muted mb-1">
                 <span>Progress</span>
                 <span>{project.progress}%</span>
               </div>
               <div className="h-2 w-full overflow-hidden rounded-full bg-border">
                 <div 
-                  className="h-full bg-primary transition-all duration-500" 
+                  className="h-full bg-brand transition-all duration-500" 
                   style={{ width: `${project.progress}%` }} 
                 />
               </div>
-              <p className="mt-2 text-sm text-slate-300 capitalize">{project.status}</p>
+              <p className="mt-2 text-sm text-muted capitalize">{project.status}</p>
             </div>
           )}
 
           {/* Done */}
           {project?.status === "done" && (
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <a 
-                href={project.downloadEPUB || "#"} 
-                className="block glass-subtle rounded-xl px-5 py-4 text-center hover:bg-secondary/20 transition-all text-foreground-dark"
+              <Button 
+                asChild
+                variant="secondary"
+                className="w-full py-4 text-center"
               >
-                Download EPUB
-              </a>
-              <a 
-                href={project.downloadPDF || "#"} 
-                className="block glass-subtle rounded-xl px-5 py-4 text-center hover:bg-secondary/20 transition-all text-foreground-dark"
+                <a href={project.downloadEPUB || "#"}>
+                  Download EPUB
+                </a>
+              </Button>
+              <Button 
+                asChild
+                variant="secondary"
+                className="w-full py-4 text-center"
               >
-                Download PDF
-              </a>
+                <a href={project.downloadPDF || "#"}>
+                  Download PDF
+                </a>
+              </Button>
             </div>
           )}
 
           {error && (
-            <p className="mt-6 text-sm text-destructive">{error}</p>
+            <p className="mt-6 text-sm text-danger">{error}</p>
           )}
 
           {/* Fine print */}
-          <p className="mt-8 text-xs text-slate-400">
+          <p className="mt-8 text-xs text-muted">
             We process uploads securely and purge them after 7 days by default. Use a glossary to lock names/terms. Style presets control a light post‑edit pass; we do not add or remove facts.
           </p>
         </motion.div>
