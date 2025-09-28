@@ -15,7 +15,7 @@ export default function LandingPage() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-2">
               <BookOpen className="h-8 w-8 text-brand" />
-              <span className="text-xl font-bold text-ink">PageTurner</span>
+              <span className="text-xl font-bold text-ink">NovelPort</span>
             </div>
             <div className="flex items-center gap-4">
               <ThemeToggle />
@@ -163,10 +163,10 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
               <BookOpen className="h-6 w-6 text-brand" />
-              <span className="text-lg font-semibold text-ink">PageTurner</span>
+              <span className="text-lg font-semibold text-ink">NovelPort</span>
             </div>
             <p className="text-sm text-muted">
-              © 2024 PageTurner. Professional light novel translation service.
+              © 2024 NovelPort. Professional light novel translation service.
             </p>
           </div>
         </div>
