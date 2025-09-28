@@ -6,7 +6,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { BookOpen } from "lucide-react";
 
 // Beautiful, production-ready upload → options → progress UI.
-// Connected to PageTurner API endpoints.
+// Connected to NovelPort API endpoints.
 // TailwindCSS required. Dark-mode ready.
 
 interface TranslationProject {
@@ -172,7 +172,7 @@ export default function TranslationWizard() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-2">
               <BookOpen className="h-8 w-8 text-brand" />
-              <span className="text-xl font-bold text-ink">PageTurner</span>
+              <span className="text-xl font-bold text-ink">NovelPort</span>
             </div>
             <ThemeToggle />
           </div>
@@ -187,7 +187,7 @@ export default function TranslationWizard() {
           className="mb-8 text-center"
         >
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-ink font-ui">
-            PageTurner — UGC Light‑Novel Translator
+            NovelPort — UGC Light‑Novel Translator
           </h1>
           <p className="mt-2 text-muted">
             Upload your novel → set style & glossary → get a polished EPUB/PDF.
